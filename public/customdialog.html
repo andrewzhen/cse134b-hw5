@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Custom Dialog</title>
+    <script type="text/javascript" src="customdialog.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.3/purify.min.js" integrity="sha256-58eGKW6SunbeAY1RP9WEbg3nViB9o1qDnxV4yCITqx4=" crossorigin="anonymous"></script>
+
+    <style>
+      #alertDialog {
+        text-align: center;
+      }
+
+      .cancel-ok {
+        float: right;
+      }
+
+      #name-input {
+        width: 400px;
+      }
+
+      .divStyle {
+        height: 40px;
+        width: fit-content;
+        padding: 3px 10px;
+        border: double;
+        line-height: 40px;
+        text-align: center;
+        margin-top: 5px;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Custom Dialog</h1>
+    <button id="alertBtn" onclick="alertFunc()">Alert</button>
+    <dialog id="alertDialog">
+      <p>Alert pressed!</p>
+      <button id="alertOk" onclick="alertHandler()">Ok</button>
+    </dialog>
+
+    <button id="confirmBtn" onclick="confirmFunc()">Confirm</button>
+    <dialog id="confirmDialog">
+      <p>Do you confirm this?</p>
+      <div class="cancel-ok">
+        <button onclick="confirmHandler(false)" id="confirmCancel">Cancel</button>
+        <button onclick="confirmHandler(true)">Ok</button>
+      </div>
+    </dialog>
+
+    <button id="promptBtn" onclick="promptFunc()">Prompt</button>
+    <dialog id="promptDialog">
+      <br> What is your name? <br>
+      <input id="name-input" type="text"> <br><br>
+      <div class="cancel-ok">
+          <button onclick="promptHandler(false)">Cancel</button>
+          <button onclick="promptHandler(true)">Ok</button>
+        </div>
+    </dialog>
+
+    <div id="outputDiv"><output id="output"></output></div>
+  </body>
+</html>

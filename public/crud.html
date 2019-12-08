@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>CRUD</title>
+
+    <style>
+      input[name=year] {
+        width: 125px;
+      }
+    </style>
+
+    <script src="movies.js"></script>
+  </head>
+
+  <body>
+    <h1>Big List of Movies</h1>
+    <ul id="movieList">
+      <!-- movies go here -->
+    </ul>
+    <span id="noMovies">No movies currently listed</span>
+    <button onclick="addMovie()">Add Movie</button>
+
+    <dialog id="movieDialog">
+      <p>Title: <input id="title" type="text" placeHolder="Title"></p>
+      <p>Year of Release: <input id="year" type="number" name="year" min="1900" max="2100"></p>
+      <p>Rating: 
+        <select name="rating" id="rating">
+          <option value="G">G</option>
+          <option value="PG">PG</option>
+          <option value="PG-13">PG-13</option>
+          <option value="R">R</option>
+          <option value="NR">NR</option>
+        </select>
+      </p>
+      <button onclick="cancel('movieDialog')">Cancel</button>
+      <button onclick="save()">Save</button>
+    </dialog>
+
+    <dialog id="deleteDialog">
+      <p>Delete movie?</p>
+      <button onclick="cancel('deleteDialog')">Cancel</button>
+      <button id="deleteConfirmBtn" onclick="deleteConfirm()">Ok</button>
+    </dialog>
+  </body>
+</html>

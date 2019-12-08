@@ -1,0 +1,75 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+a {
+	font-family: cursive;
+	font-size: large;
+}
+
+p {
+	font-family: sans-serif;
+	font-size: 24px;
+}
+
+pre {
+	font-family: monospace;
+	font-size: 2vw;
+}
+
+ul {
+	font-family: fantasy;
+	font-size: 2rem;
+}
+
+aside {
+	font-family: serif;
+}
+
+.nav-buttons a {
+	text-decoration: none;
+	font: 20px serif;
+}
+
+#halloween {
+	text-indent: 1in;
+}
+
+.story p {
+	font-family: "Roboto", sans-serif;
+	font-weight: bold;
+}
+
+#dracula {
+	font-style: italic;
+}
+
+ruby {
+	font-size: 1cm;
+	text-shadow: #F00 2px 2px 0;
+}
+
+#halloween-word {
+	font-size: 2mm;
+}
+
+.big-font {
+	font-size: larger;
+	text-transform: uppercase;
+}
+
+#some-poem {
+	text-shadow: #713959 1px 0px 10px;
+	font-size: 2em;
+	line-height: 1.5;
+}
+
+ins[datetime] {
+	text-align: center;
+}
+
+#hw-progress {
+	font-variant: small-caps;
+}
+
+#hw-progress-header {
+	font-size: 200%;
+}

@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Embedded Page</title>
+	<base href="media/">
+</head>
+<body style="background: grey">
+	<picture>
+		<source srcset="cat.png" media="(min-width:1300px)" alt="sitting grey cat">
+		<source srcset="cat.gif" media="(min-width:1000px)" alt="grey cat in bowl">
+		<img src="https://ewscripps.brightspotcdn.com/dims4/default/34e16d5/2147483647/strip/true/crop/1920x1080+0+98/resize/1280x720!/quality/90/?url=https%3A%2F%2Fewscripps.brightspotcdn.com%2Fca%2F30%2Fadb62988490c8182e0ad157d4a42%2Fcat-1455468-1920.jpg" alt="orange cat closeup" width=500px height=auto>
+	</picture>
+
+	<p><iframe src="https://cat-bounce.com" width=500px height=500px></iframe></p>
+
+	<embed src="cat.swf"></embed>
+	<aside><small>Animation by user <bdi>catnip5</bdi> on <cite>deviantart.com</cite></small></aside>
+
+	<object data="cat.wav"><param name="autoplay" value="false"></object>
+
+	<p>
+		<video width="500px" height=auto controls>
+			<source src="cat.mp4" type="video/mp4">
+		</video>
+	</p>
+
+	<audio controls>
+		<source src="cat.mp3" type="audio/mp3">
+		<track kind="subtitles" src="subtitles.vtt">
+	</audio>
+
+	<img src="cat-map.jpg" alt="cat on ceiling playground" usemap="#cat-playground">
+	<map name="cat-playground">
+		<area shape="square" coords="240,80,350,200" alt="cat" href="cat-map.png">
+	</map>
+</body>
+</html>

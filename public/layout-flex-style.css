@@ -1,0 +1,34 @@
+html, body {
+	text-align: center;
+	font-size: 2.5vw;
+	margin: 0;
+	padding: 0;
+}
+
+[class~=box] {
+	line-height: 25vw;
+	margin: 2vw;
+	background: #EAEAEA;
+	height: 25vw;
+}
+
+.flex-container-v {
+	display: flex;
+	flex-direction: column;
+}
+
+.flex-container-h {
+	display: flex;
+}
+
+.full-width {
+	width: 96vw;
+}
+
+.sidebar {
+	width: 27vw;
+}
+
+body .center {
+	width: 34vw;
+}

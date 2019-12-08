@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+html, body {
+	margin: 5vw 0;
+	padding: 0;
+	font-family: "Roboto", sans-serif;
+}
+
+a {
+	font-size: 1.5vw;
+	padding: 2vw;
+	text-decoration: none;
+	color: #171717;
+	transition: all 0.3s;
+}
+
+.nav {
+	padding: 2vw;
+}
+
+.nav a {
+	font-size: 1.6vw;
+	font-weight: bold;
+}
+
+.nav a:hover {
+	color: #999;
+	transition: all 0.3s;
+}
+
+.nav .expand {
+	display: none;
+}
+
+#expandNav {
+	font-size: 7vw;
+}
+
+.main {
+	width: 92vw;
+}
+
+[src^=pic] {
+	width: 50%;
+	margin-bottom: 10vw;
+}
+
+.main {
+	padding: 2vw;
+	margin: 2vw;
+}
+
+@media screen and (max-width: 900px) {
+	.nav a {
+		font-size: 2vw;
+		transition: all 0.3s;
+	}
+
+	[src^=pic] {
+		width: 75%;
+		transition: all 0.3s;
+	}
+}
+
+@media screen and (max-width: 660px) {
+	.nav a {
+		font-size: 5vw;
+		transition: all 0.3s;
+	}
+
+	.nav .expand {
+		display: inline;
+		float: right;
+		position: absolute;
+		top: 10vw;
+		right: 2vw;
+	}
+
+	.nav .hide {
+		display: none;
+	}
+
+	.nav.responsive a {
+		float: none;
+		display: block;
+		text-align: left;
+	}
+
+	[src^=pic] {
+		width: 100%;
+		transition: all 0.3s;
+	}
+}

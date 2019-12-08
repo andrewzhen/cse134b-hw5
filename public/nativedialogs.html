@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Native Dialogs</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/dompurify/2.0.3/purify.min.js" integrity="sha256-58eGKW6SunbeAY1RP9WEbg3nViB9o1qDnxV4yCITqx4=" crossorigin="anonymous"></script>
+
+    <style>
+      .divStyle {
+        height: 40px;
+        width: fit-content;
+        padding: 3px 10px;
+        border: double;
+        line-height: 40px;
+        text-align: center;
+      }
+    </style>
+  </head>
+
+  <body>
+    <h1>Simple Dialogs?</h1>
+    <button id="alertBtn">Alert</button>
+    <button id="confirmBtn">Confirm</button>
+    <button id="promptBtn">Prompt</button>
+    <button id="saferPromptBtn">Safer Prompt</button>
+    <hr>
+    <div id="outputDiv"><output id="output"></output></div>
+
+    <script>
+      // Alert
+      document.getElementById("alertBtn").addEventListener("click", alertFunc = () => alert('Alert pressed!'));
+      
+      // Confirm
+      document.getElementById("confirmBtn").addEventListener("click",
+      confirmMsg = () => {
+        let response = confirm('Do you confirm this?');
+        document.getElementById("outputDiv").classList.add("divStyle");
+        document.getElementById("output").innerHTML = `Confirm result : ${response}`;
+      })
+      
+      // Prompt
+      document.getElementById("promptBtn").addEventListener("click",
+      promptMsg = () => {
+        let response = prompt("What is your name?");
+        document.getElementById("outputDiv").classList.add("divStyle");
+        if (response) {
+          document.getElementById("output").innerHTML = `Prompt result : ${response}`;
+        } else {
+          document.getElementById("output").innerHTML = "Prompt result : User didn't enter anything";
+        }
+      })
+      
+      // Safer Prompt
+      document.getElementById("saferPromptBtn").addEventListener("click",
+      saferPromptMsg = () => {
+        let placeHolder = "pwned";
+        let response = prompt("What is your name?", `<b onmouseover="alert('${placeHolder}')">Roll me</b>`);
+        let safeResponse = DOMPurify.sanitize(response);
+        document.getElementById("outputDiv").classList.add("divStyle");
+        if (response) {
+          document.getElementById("output").innerHTML = `Prompt result : ${safeResponse}`;
+        } else {
+          document.getElementById("output").innerHTML = "Prompt result : User didn't enter anything";
+        }
+      })
+    </script>
+  </body>
+</html>

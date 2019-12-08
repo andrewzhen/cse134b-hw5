@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Responsive</title>
+	<link rel="stylesheet" type="text/css" href="responsive-style.css">
+</head>
+<body>
+	<div class="nav" id="navBar">
+		<a href="#">Home</a>
+		<a href="#" class="hide">Landscape</a>
+		<a href="#" class="hide">Portrait</a>
+		<a href="#" class="hide">City</a>
+		<a href="#" class="hide">About</a>
+		<a href="#" class="hide">Contact</a>
+		<a href="javascript:void(0);" class="expand" id="expandNav" onclick="expand()">+</a>
+	</div>
+
+	<div class="main">
+		<img src="pic3.jpg" alt="rock arch in the mountains">
+		<img src="pic1.jpg" alt="purple hazy hills">
+		<img src="pic2.jpg" alt="green leafy plants close up">
+	</div>
+
+	<script>
+		function expand() {
+			var x = document.getElementById("navBar");
+			if (x.className === "nav") {
+				x.className += " responsive";
+				document.getElementById("expandNav").innerHTML = "—";
+			} else {
+				x.className = "nav";
+				document.getElementById("expandNav").innerHTML = "+";
+			}
+		}
+	</script>
+</body>
+</html>
