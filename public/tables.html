@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Tables Page</title>
+	<base href="media/">
+</head>
+<body>
+	<p id="error">In the following table, the reality is given in the vertical columns while the conclusion is given in the horizontal rows.</p>
+	<table aria-describedby="error" border="5" align="center">
+		<caption>Type I and Type II Errors</caption>
+
+		<colgroup>
+			<col>
+			<col span="2" style="background: yellow">
+			<col span="2" style="background: green">
+		</colgroup>
+
+		<thead>
+			<tr>
+				<th></th>
+				<th><label>H<sub>0</sub> is True</label></th>
+				<th><label>Comments</label></th>
+				<th><label>H<sub>1</sub> is True</label></th>
+				<th><label>Comments</label></th>
+			</tr>
+		</thead>
+
+		<tbody>
+			<tr>
+				<th><label>Do Not Reject H<sub>0</sub></label></th>
+
+				<td>Correct Conclusion</td>
+				<td>Good</td>
+				<td>Type II Error</td>
+				<td>Bad</td>
+			</tr>
+
+			<tr>
+				<th><label>Reject H<sub>0</sub></label></th>
+
+				<td>Type I Error</td>
+				<td>Bad</td>
+				<td>Correct Conclusion</td>
+				<td>Good</td>
+			</tr>
+		</tbody>
+
+		<tfoot>
+			<tr>
+				<th>Summary</th>
+
+				<td colspan="2">Can be extraneous</td>
+				<td colspan="2">Can be dangerous</td>
+			</tr>
+		</tfoot>
+	</table>
+</body>
+</html>

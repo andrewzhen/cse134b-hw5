@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Forms Page</title>
+	<base href="media/">
+</head>
+<body>
+	<h1>Application Form</h1>
+
+	<p>Total Applicants: <meter min="0" max="105" value="10"></meter></p>
+
+
+	<fieldset>
+		<legend>Basic Information</legend>
+		<p>Please indicate your full name and where you are from.</p>
+		<form action="form_results.txt" autocomplete="off">
+			<input type="text" name="fullname" value="Full Name">
+			
+			<input type="radio" name="location" id="sandiego" value="sandiego" checked>
+			<label for="sandiego">San Diego</label>
+			
+			<input type="radio" name="location" id="losangeles" value="losangeles">
+			<label for="losangeles">Los Angeles</label>
+			
+			<input type="radio" name="location" id="irvine" value="Irvine">
+			<label for="irvine">Irvine</label>
+			
+			<input type="submit" name="submit" value="Submit">
+		</form>
+	</fieldset>
+
+	<button onclick="alert('Hello there')">Kind Button</button>
+
+	<fieldset>
+		<legend>Locations</legend>
+		<p>Please indicate your location preference(s).</p>
+		<select size="4" required multiple>
+			<optgroup label="Near the Water">
+				<option value="sanfrancisco">San Francisco</option>
+				<option value="oakland" selected>Oakland</option>
+			</optgroup>
+
+			<optgroup label="Not-so-near the Water">
+				<option value="hayward">Davis</option>
+				<option value="sanleandro">Modesto</option>
+			</optgroup>
+		</select>
+	</fieldset>
+
+	<fieldset>
+		<legend>Personality Question</legend>
+		<label>Which would you take?
+			<input name=pill list=pill>
+			<datalist id="pill">
+				<option value="Blue Pill">Ignorance is bliss.</option>
+				<option value="Red Pill">Only the truth matters.</option>
+				<option value="None">You better run.</option>
+			</datalist>
+		</label>
+	</fieldset>
+
+	<p>Explain why you want this job.</p>
+	<textarea rows="10" cols="50" maxlength="3000" placeholder="Type here"></textarea>
+
+	<fieldset>
+		<legend>Compensation</legend>
+		<form oninput="final.value=parseInt(salary.value) - 5000">
+			<label>Desired Salary </label><input type="text" id="salary"> <br>
+			<label>Final Salary: </label><output name="final" for="salary"></output>
+		</form>
+	</fieldset>
+
+	<p>Your Application Progress: </p>
+	<progress value="90" max="100"></progress>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Section Page</title>
+	<base href="media/">
+	<script type="text/javascript">
+		function resizeHandler() {
+			document.getElementById("resize").innerHTML = "You resized the page!!!";
+		}
+	</script>
+</head>
+<body onresize="resizeHandler()">
+	<p id="resize">You haven't resized the page.</p>
+
+	<article>
+		<header>
+			<h1>How I get ready for school.</h1>
+			<h2>The morning routine of a fourth year UCSD student.</h2>
+			<h3>I think that people have interesting morning routines so I will describe my personal experience getting ready for school on a typical day in this article.</h3>
+
+			<nav>
+				<ul>
+					<li><a href="#good-days">Good Days</a></li>
+					<li><a href="#not-so-good-days">Not So Good Days</a></li>
+				</ul>
+			</nav>
+		</header>
+
+		<aside>Because people naturally have better days than others, I can explain what I do (or don't do) on those days. Included in this article is my morning routine for good days and not-so-good days.</aside>
+
+		<section id="good-days" aria-label="Good days.">
+			<h4>This section is about my good days.</h4>
+
+			<h5>When do I get up?</h5>
+			<p>I get up as soon as I hear my alarm.</p>
+
+			<h5>How do I decide on what to wear?</h5>
+			<p>Check the weather and think about event's on my calendar and dress for the occasion.</p>
+
+			<h5>What do I eat?</h5>
+			<h6>My favorite cereal recipe.</h6>
+			<p>Pour Reese's Puffs into a large bowl. Then drown it in milk. Spoon optional.</p>
+		</section>
+
+		<section id="not-so-good-days" aria-label="Not so good days.">
+			<h4>This section is about my not-so-good days.</h4>
+
+			<h5>When do I get up?</h5>
+			<p>I hit snooze and get up at the last possible minute.</p>
+
+			<h5>How do I decide on what to wear?</h5>
+			<p>I wear anything that feels comfortable and that doesn't smell.</p>
+
+			<h5>What do I eat?</h5>
+			<p>I grab a granola bar and hurry to catch the bus because I spent too long in bed.</p>
+		</section>
+
+		<footer><p>Last modified on October 17, 2019.</p></footer>
+	</article>
+</body>
+</html>

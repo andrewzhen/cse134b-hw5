@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Xmas Wishlist</title>
+    <link rel="stylesheet" href="wishlist.css">
+    <script src="wishlist.js"></script>
+  </head>
+
+  <body>
+    <div id="user">
+      <span>Welcome <span id="username">Andrew</span>!</span>
+      <!-- <button id="logout">Logout</button> -->
+      <a href="login.html">Logout</a>
+    </div>
+
+    <main>
+      <h1>Xmas Wishlist <span id="year">2019</span></h1>
+
+      <button id="add" class="btn addBtn" onclick="addItem()">Add Item</button>
+
+      <ul id="wishList">
+        <!-- wishlist goes here -->
+      </ul>
+      <span id="noItems">No items currently wished</span>
+
+      <dialog id="itemDialog">
+        <p>Item: <input id="item" type="text" placeHolder="Item"></p>
+        <p>Price: <input id="price" type="number" name="price" min="1" max="999999"></p>
+        <p>Category: <input id="category" type="text" placeHolder="Category"></p>
+        <p>Image: <input id="image" type="file" name="image" accept="image/png, image/jpeg"></p>
+        <p>Comment: <input id="comment" type="text" placeholder="Comment"></p>
+        <button onclick="cancel('itemDialog')">Cancel</button>
+        <button onclick="save()">Save</button>
+      </dialog>
+
+      <dialog id="deleteDialog">
+        <p>Delete item?</p>
+        <button onclick="cancel('deleteDialog')">Cancel</button>
+        <button id="deleteConfirmBtn" onclick="deleteConfirm()">Ok</button>
+      </dialog>
+    </main>
+  </body>
+</html>

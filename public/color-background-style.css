@@ -1,0 +1,70 @@
+html, body {
+	margin: 0;
+	padding: 0;
+}
+
+.dark-header {
+	background-color: rgb(30,30,30);
+	border: dashed 20px black;
+	padding: 10px;
+	background-clip: content-box;
+	text-align: center;
+}
+
+.dark-header p {
+	color: white;
+}
+
+#nba-1 {
+	color: red;
+}
+
+#nba-2 {
+	color: #55F;
+}
+
+#nba-3 {
+	color: rgb(255,255,255);
+}
+
+#nba-4 {
+	color: hsl(0, 100%, 50%);
+}
+
+#nba-5 {
+	color: rgba(80,80,255,100);
+}
+
+#logo {
+	background: url("logo.png") center top no-repeat fixed;
+	height: 50vh;
+	width: 100vw;
+	opacity: 0.8;
+}
+
+#magic {
+	height: 50vh;
+	width: 100vw;
+	background: black;
+	background-image: url("ad.jpg");
+	background-repeat: no-repeat;
+	background-size: contain;
+	background-attachment: scroll;
+	background-position: center;
+}
+
+#linear-gradient {
+	background-image: linear-gradient(to top right, yellow, purple);
+	height: 500px;
+	width: 100vw;
+}
+
+#radial-gradient {
+	background-image: radial-gradient(white, black);
+	height: 500px;
+	width: 100vw;
+}
+
+[id|=nba] {
+	font-family: sans-serif;
+}

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Interactive Page</title>
+	<base href="media/">
+</head>
+<body>
+	<script type="text/javascript">
+		function handleClick() {
+			document.getElementById("dlg").style.visibility = "visible";
+		}
+
+		function showTemplate() {
+			var temp = document.getElementsByTagName("template")[0];
+			var ele = temp.content.cloneNode(true);
+			document.body.appendChild(ele);
+		}
+
+		function drawCanv() {
+			var canvEle = document.getElementById("canv");
+			var canvX = canvEle.getContext("2d");
+			canvX.fillStyle = "#000";
+			canvX.fillRect(0, 0, 100, 100);
+		}
+	</script>
+
+	<noscript>JavaScript is disabled.</noscript>
+
+	<details>
+		<summary>There is no school on the following dates</summary>
+		<ul>
+			<li>Nov 28</li>
+			<li>Nov 29</li>
+		</ul>
+	</details>
+
+	<button onclick="handleClick()"><dialog open id="dlg" style="visibility: hidden;">Stay in school</dialog>Show a message</button>
+
+	<button onclick="showTemplate()">Show a template</button>
+
+	<template>
+		<h1>UCSD</h1>
+		<p>The University of California, San Diego is a public research university located in the La Jolla neighborhood of San Diego, California, in the United States.</p>
+	</template>
+
+	<button onclick="drawCanv()">Draw on canvas</button>
+	<canvas id="canv"></canvas>
+</body>
+</html>

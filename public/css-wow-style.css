@@ -1,0 +1,76 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto&display=swap');
+
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", Arial;
+  background: black;
+}
+
+#colorBlock {
+  animation: colorchange 20s ease infinite;
+  width: 100vw;
+  height: 100vh;
+}
+
+#colorBlock h1 {
+  color: black;
+  text-shadow: none;
+}
+
+@keyframes colorchange {
+  0%   {background: #E57373;}
+  10% {background: #F06292;}
+  20%  {background: #BA68C8;}
+  30%  {background: #7986CB;}
+  40%  {background: #4FC3F7;}
+  50% {background: #4DB6AC;}
+  60% {background: #81C784;}
+  70% {background: #DCE775;}
+  80% {background: #FFD54F;}
+  90% {background: #FFB74D;}
+  100% {background: #E57373;}
+}
+
+#wrapper {
+  height: 100vh;
+  overflow-x: hidden;
+  overflow-y: auto;
+  perspective: 2px;
+}
+
+.block {
+  position: relative;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  text-shadow: 0 0 5px #000;
+}
+
+.parallax::after {
+  content: " ";
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  transform: translateZ(-1px) scale(1.5);
+  background-size: 100%;
+  z-index: -1;
+}
+
+.bg1::after {
+  background-image: url("parallax1.jpg");
+  background-repeat: no-repeat;
+}
+
+.bg2::after {
+  background-image: url("parallax2.jpg");
+  background-repeat: no-repeat;
+}
+
+[class~=block] {
+  font-size: 5vw;
+}

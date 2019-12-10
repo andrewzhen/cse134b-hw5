@@ -1,0 +1,130 @@
+body, html {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  color: #121212;
+  background-image: linear-gradient(#EF5350, #1565C0);
+  min-height: 100vh;
+}
+
+/* Login */
+hr {
+  border: 0.7px solid #bbb;
+  margin: 5vw 0;
+}
+
+h2 {
+  font-size: 2.5rem;
+  text-align: center;
+}
+
+#loginForm input, #signupForm input {
+  width: 100%;
+  font-size: 1.2rem;
+  padding: 20px 20px;
+  margin: 0.5vw 0;
+  border: 1px solid #eee;
+}
+
+#loginForm button, #signupForm button {
+  font-size: 1.2rem;
+  padding: 10px 30px;
+  margin: 2vw 0;
+  border-radius: 30px;
+  width: fit-content;
+  font-weight: bolder;
+}
+
+
+
+
+/* Wishlist */
+#user {
+  position: absolute;
+  right: 200px;
+  top: 20px;
+  font-size: 1.2rem;
+}
+
+#username {
+  font-weight: bolder;
+}
+
+#logout {
+  font-size: 1.2rem;
+  border: none;
+  background: transparent;
+  text-decoration: underline;
+}
+
+#logout:hover {
+  cursor: pointer;
+}
+
+main {
+  width: fit-content;
+  margin: 5vw auto;
+  padding: 5vw;
+  background-color: white;
+  border-radius: 10px;
+}
+
+h1 {
+  font-size: 3.5rem;
+  margin-top: 0;
+}
+
+#year {
+  font-size: 1rem;;
+}
+
+#add {
+  margin-bottom: 5vw;
+}
+
+.btn {
+  border: none;
+  background-color: #121212;
+  color: white
+}
+
+.addBtn {
+  padding: 15px 20px;
+  border-radius: 30px;
+  width: 100%;
+  font-size: 1rem;
+  font-weight: bolder;
+}
+
+.btn:hover {
+  background-color: #444;
+  cursor: pointer;
+}
+
+#wishList {
+  padding: 0;
+}
+
+ul {
+  list-style-type: none;
+}
+
+.modifyBtns {
+  padding: 10px 0;
+  margin: 10px 15px 0 0;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  width: 20%;
+  font-weight: bolder;
+}
+
+.delete {
+  background-color: #EF5350;
+}
+
+.delete:hover {
+  background-color: #E57373;
+}
