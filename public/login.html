@@ -12,10 +12,10 @@
         <hr>
         <h2>Login</h2>
 
-        <form id="loginForm" action="xmaswishlist.html">
-          <input type="text" placeholder="Username" name="username" required>
+        <form id="loginForm">
+          <input type="text" placeholder="Username" name="username" id = "username" required>
           <br>
-          <input type="password" placeholder="Password" name="password" required>
+          <input type="password" placeholder="Password" name="password" id="password" required>
           <br>
           <button class="btn" type="submit">Login</button>
         </form>
@@ -23,4 +23,40 @@
         <p>Don't have an account? <a href="signup.html">Signup</a></p>
     </main>
   </body>
+
+  <script>
+
+    window.onload = () => {
+      document.getElementById("loginForm").addEventListener("submit", function(event){
+        event.preventDefault()
+        handleLogin()
+      })
+
+      handleLogin = () => {
+        console.log("User is trying to login")
+        let name= document.getElementById("username").value;
+        let password= document.getElementById("password").value;
+
+        const xhr= new XMLHttpRequest();
+        xhr.open('POST', 'http://fa19server.appspot.com/api/Users/login', true)
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        xhr.onreadystatechange= () => {
+          if(xhr.readyState== 4 && xhr.status==401){
+            alert("Login Failed :(");
+            
+          } else if (xhr.readyState== 4 && xhr.status == 200){
+            alert ("You are now logged in")
+            console.log(xhr.responseText.id);
+          }
+        }
+
+        let payload= `username=${name}&password=${password}`
+        xhr.send(payload)
+
+
+
+        console.log(name+password);
+      }
+    }
+  </script>
 </html>

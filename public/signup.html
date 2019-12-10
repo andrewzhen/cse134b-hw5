@@ -12,19 +12,66 @@
         <hr>
         <h2>Signup</h2>
 
-        <form id="signupForm" action="login.html">
-          <input type="text" placeholder="Username" name="username" required>
+        <form id="signupForm">
+          <input type="text" placeholder="Username" name="username" id= "username" required>
           <br>
-          <input type="password" placeholder="Password" name="password" required>
+          <input type="password" placeholder="Password" name="password" id="password" required>
           <br>
-          <input type="password" placeholder="Confirm Password" name="confirmPassword" required>
-          <br>
-          <input type="email" placeholder="Email Address" name="emailaddress" required>
+          <input type="email" placeholder="Email Address" name="emailaddress" id= "email" required>
           <br>
           <button class="btn" type="submit">Signup</button>
         </form>
 
         <p>Already have an account? <a href="login.html">Login</a></p>
     </main>
+
+    <script>
+      window.addEventListener("load", function(){
+
+        document.getElementById('signupForm').addEventListener("submit", function(event){
+          event.preventDefault()
+          handleSubmit()
+        } )
+
+        handleSubmit =() => {
+          console.log("submit clicked")
+          let xhr= new XMLHttpRequest()
+
+          xhr.open('POST', '​http://fa19server.appspot.com/api/Users', true)
+          xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded;charset=utf-8')
+          xhr.onreadystatechange=()=>{
+            if(xhr.readyState==4 && xhr.status==200){
+              console.log("GOOD")
+            }else{
+              console.log("IDK")
+            }
+          }
+
+          let name= document.getElementById('username').value;
+          console.log(name);
+
+          let email= document.getElementById('email').value;
+          console.log(email);
+
+          let password= document.getElementById('password').value;
+          console.log(password);
+
+          let payload= `username=${name}&email=${email}&password=${password}`
+
+          let pay= `username=paridhi&email=pari@gmail.com&password=hello`
+          xhr.send(pay)
+        }
+
+        function handleResponse(xhr){
+          if(xhr.readyState==4 && xhr.status==200){
+            console.log("Good")
+          }
+          else{
+            console.log("LOSER")
+          }
+        }
+
+      })
+    </script>
   </body>
 </html>
