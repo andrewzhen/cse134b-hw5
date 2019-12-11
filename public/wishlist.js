@@ -1,4 +1,26 @@
 window.onload = () => {
+
+  retrieveAllWishes=() => {
+    const xhr= new XMLHttpRequest()
+
+    const retrieveUrl= "http://fa19server.appspot.com/api/wishlists/myWishlist?access_token="+
+            localStorage.getItem("access_token")
+
+    xhr.open ('GET', retrieveUrl, true)
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    xhr.onreadystatechange= () => {
+      if(xhr.readyState== 4 && xhr.status== 200){
+        console.log(xhr.responseText)
+      } else if (xhr.readyState == 4 && xhr.status== 401){
+        alert("You must be logged in to see your list")
+      }
+    }
+
+    xhr.send()
+  }
+
+  retrieveAllWishes()
+
   // Variables
   let wishList = document.getElementById("wishList");
   let itemDialog = document.getElementById("itemDialog");
@@ -152,6 +174,9 @@ window.onload = () => {
       let wishItem = [item, price, category, image, comment];
       items.push(wishItem);
       createItem(wishItem[0], wishItem[1], wishItem[2], wishItem[3], wishItem[4]);
+      console.log(wishItem)
+
+      handleNewItem(wishItem);
     } else {
       // Update item
       let itemInfo = toEdit.childNodes[1];
@@ -183,8 +208,56 @@ window.onload = () => {
 
   checkList();
 
-  // Logout
-  document.getElementById("logout").onclick = function() {
-    location.href = "login.html";
-  };
+  //Sending WishList Item to the server
+  handleNewItem = (wishItem) => {
+    const xhr= new XMLHttpRequest();
+
+    const url= "http://fa19server.appspot.com/api/wishlists?access_token="+localStorage.getItem('access_token');
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange= () => {
+      if(xhr.readyState==4 && xhr.status== 200){
+        console.log("Item Added To The Server")
+        console.log(xhr.responseText)
+      }else if (xhr.readyState== 4 && xhr.status!= 200){
+        console.log("Unable to add item to wishlist")
+      }
+    }
+
+    let item=wishItem[0]
+    let price= wishItem[1]
+    let category= wishItem[2]
+    let image= wishItem[3]
+    let comment= wishItem[4]
+
+    let payload= `item=${item}&price=${price}&category=${category}&image=${image}&comment=${comment}`
+
+    xhr.send(payload)
+  }
+
+  //Logout
+  document.getElementById('logout').addEventListener('click', ()=> {
+
+    console.log(localStorage.getItem("access_token"));
+
+    const access_token= localStorage.getItem('access_token');
+    const url= "http://fa19server.appspot.com/api/Users/logout?access_token="+access_token;
+    console.log(url)
+
+    const xhr= new XMLHttpRequest()
+    xhr.open('POST', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    xhr.onreadystatechange = () => {
+      if( xhr.readyState==4 && xhr.status== 204){
+        console.log("Logout Processed");
+
+        window.location.href="./login.html"
+      }else if(xhr.readyState==4 && xhr.status == 401){
+        console.log("Authorization Issue")
+      }
+    }
+
+    xhr.send();
+  })
 }
