@@ -1,5 +1,7 @@
 window.onload = () => {
 
+  let allItemsToPop=[];
+
   retrieveAllWishes=() => {
     const xhr= new XMLHttpRequest()
 
@@ -10,7 +12,14 @@ window.onload = () => {
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.onreadystatechange= () => {
       if(xhr.readyState== 4 && xhr.status== 200){
-        console.log(xhr.responseText)
+        allWishes= JSON.parse(xhr.responseText);
+
+        for(let i=0; i<allWishes.wishItems.length; i++){
+          let currWish= allWishes.wishItems[i]
+          //allItemsToPop.push(currWish)
+          //item, price, category, img, comment
+          createItem(currWish.item, currWish.price, currWish.category, currWish.img, currWish.comment);
+        }
       } else if (xhr.readyState == 4 && xhr.status== 401){
         alert("You must be logged in to see your list")
       }
@@ -20,6 +29,7 @@ window.onload = () => {
   }
 
   retrieveAllWishes()
+  
 
   // Variables
   let wishList = document.getElementById("wishList");
@@ -29,15 +39,15 @@ window.onload = () => {
   let inputCategory = document.getElementById("category");
   let inputImage = document.getElementById("image");
   let inputComment = document.getElementById("comment");
-  let items = [
-    ["Orange", 1, "Fruit", "orange.png", "naval pls"],
-    ["Apple", 1, "Fruit", "apple.png", "fuji pls"],
-    ["Banana", 1, "Fruit", "none.png", ""],
-  ]
+  // let items = [
+  //   ["Orange", 1, "Fruit", "orange.png", "naval pls"],
+  //   ["Apple", 1, "Fruit", "apple.png", "fuji pls"],
+  //   ["Banana", 1, "Fruit", "none.png", ""],
+  // ]
   let toDelete;
   let toEdit;
   let imgToRender;
-
+  
   // Functions
   checkList = () => noItems.style.display = (wishList.childElementCount == 0) ? "inline-block" : "none";
 
@@ -84,7 +94,6 @@ window.onload = () => {
     img.style.padding = "100px";
     return img;
   }
-
   function renderImg(input, display) {
     var reader;
   
@@ -172,7 +181,7 @@ window.onload = () => {
     if (toEdit == null) {
       // Create item
       let wishItem = [item, price, category, image, comment];
-      items.push(wishItem);
+      //items.push(wishItem);
       createItem(wishItem[0], wishItem[1], wishItem[2], wishItem[3], wishItem[4]);
       console.log(wishItem)
 
@@ -201,10 +210,10 @@ window.onload = () => {
     imgToRender = this;
   });
 
-  // Render
-  for (let i = 0; i < items.length; i++) {
-    createItem(items[i][0], items[i][1], items[i][2], items[i][3], items[i][4]);
-  }
+  // // Render
+  // for (let i = 0; i < items.length; i++) {
+  //   createItem(items[i][0], items[i][1], items[i][2], items[i][3], items[i][4]);
+  // }
 
   checkList();
 
