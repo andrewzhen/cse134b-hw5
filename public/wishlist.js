@@ -252,7 +252,11 @@ window.onload = () => {
     if(!inputItem.value) {
       alert("Please give this item a name");
       console.log("User tried to save changes without providing item name");
+    } else if (!inputImage.value) {
+      alert("Please give this item an image");
+      console.log("User tried to save changes without providing item image");
     } else {
+      console.log(inputImage.value);
       // Get values
       let item = inputItem.value;
       let price = inputPrice.value;
