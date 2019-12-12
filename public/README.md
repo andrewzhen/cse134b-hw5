@@ -15,6 +15,10 @@ for SignUp is present, due to CORS issues we were unable to get it to function,
 but sincerely hope that it works for you. We've used AJAX and HTTP to implement
 all our calls to the server and have tested it against Postman (REALLY HELPFUL)
 
+Test Account:
+Username: login
+Password: login
+
 Extra Credit:
 ● A flashier interface (5%)
 ● A mobile interface (5%)
