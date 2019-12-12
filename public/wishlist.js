@@ -8,14 +8,25 @@ window.onload = () => {
 
     xhr.open ('GET', retrieveUrl, true)
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    if(!localStorage.getItem('access_token')){
+      console.log("Unable to retrieve access token")
+    }
     xhr.onreadystatechange= () => {
       if(xhr.readyState== 4 && xhr.status== 200){
         allWishes= JSON.parse(xhr.responseText);
 
-        for(let i=0; i<allWishes.wishItems.length; i++){
-          let currWish= allWishes.wishItems[i]
-          createItem(currWish.item, currWish.price, currWish.category, currWish.img, currWish.comment);
+        if(allWishes.wishItems.length==0){
+          checkList();
+        }else{
+          for(let i=0; i<allWishes.wishItems.length; i++){
+            let currWish= allWishes.wishItems[i]
+            //allItemsToPop.push(currWish)
+            //item, price, category, img, comment
+            createItem(currWish.item, currWish.price, currWish.category, currWish.img, currWish.comment, currWish.id);
+  
         }
+        }
+
       } else if (xhr.readyState == 4 && xhr.status== 401){
         alert("You must be logged in to see your list")
       }
@@ -34,11 +45,6 @@ window.onload = () => {
   let inputCategory = document.getElementById("category");
   let inputImage = document.getElementById("image");
   let inputComment = document.getElementById("comment");
-  // let items = [
-  //   ["Orange", 1, "Fruit", "orange.png", "naval pls"],
-  //   ["Apple", 1, "Fruit", "apple.png", "fuji pls"],
-  //   ["Banana", 1, "Fruit", "none.png", ""],
-  // ]
   let toDelete;
   let toEdit;
   let imgToRender;
@@ -69,7 +75,10 @@ window.onload = () => {
   });
   
   // Functions
-  checkList = () => noItems.style.display = (wishList.childElementCount == 0) ? "inline-block" : "none";
+  checkList = () => {
+    noItems.style.display = (wishList.childElementCount == 0) ? "inline-block" : "none";
+    noItems.innerHTML = "No items currently wished"
+  }
 
   edit = obj => {
     itemDialog.showModal();
@@ -81,9 +90,48 @@ window.onload = () => {
   }
 
   deleteConfirm = () => {
+
+    //checkWish(toDelete.getAttribute('data-id'));
+    handleDelete(toDelete.getAttribute('data-id'));
     toDelete.remove();
     checkList();
     deleteDialog.close();
+  }
+  
+  checkWish =id=>{
+    console.log("checking wish");
+    const xhr= new XMLHttpRequest()
+    const url= `http://fa19server.appspot.com/api/wishlists/${id}?access_token=${localStorage.getItem('access_token')}`
+
+    xhr.open('GET', url, true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+
+    xhr.onreadystatechange=()=>{
+      if(xhr.readyState==4){
+        console.log(xhr.status)
+      }
+    }
+
+    xhr.send()
+  }
+
+  handleDelete= deleteId => {
+
+    
+    const xhr= new XMLHttpRequest();
+    console.log("delete"+ localStorage.getItem('access_token'))
+    const url= `http://fa19server.appspot.com/api/wishlists/${deleteId}?access_token=${localStorage.getItem('access_token')}`
+    console.log(url);
+
+    xhr.open('DELETE',url,true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+    xhr.onreadystatechange=()=>{
+      if(xhr.readyState==4){
+        console.log(xhr.status)
+      }
+    }
+
+    xhr.send();
   }
 
   del = obj => {
@@ -133,8 +181,9 @@ window.onload = () => {
     }
   }
 
-  createItem = (item, price, category, img, comment) => {
+  createItem = (item, price, category, img, comment, id) => {
     let itemEl = document.createElement("LI");
+    itemEl.setAttribute('data-id', id)
     let itemDiv = document.createElement("DIV");
     itemDiv.style.marginBottom = "5vw";
 
@@ -222,7 +271,30 @@ window.onload = () => {
         renderImg(imgToRender, toEdit.childNodes[0]);
       }
       itemInfo.childNodes[3].innerText = `Comment: ${comment}`;
-      toEdit = null;
+
+      //when i click on the delete button
+
+      //send edited item to the server
+      const xhr= new XMLHttpRequest()
+      const url= `http://fa19server.appspot.com/api/wishlists/${toEdit.getAttribute(
+        'data-id')}/replace?access_token=${localStorage.getItem('access_token')}`
+
+      console.log(url);
+
+      xhr.open('POST', url, true);
+      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+      xhr.onreadystatechange=()=>{
+        if(xhr.readyState==4 && xhr.status==200){
+          console.log("Your item has been edited")
+        } else if(xhr.readyState==4 && xhr.status== 401){
+          alert("Must be logged in to authorize changes")
+        }
+      }
+
+      let payload= `item=${item}&price=${price}&category=${category}&image=${image}&comment=${comment}`;
+      console.log(payload)
+
+      xhr.send(payload)
     }
 
     // Clean up
@@ -235,8 +307,12 @@ window.onload = () => {
     imgToRender = this;
   });
 
-  // Displays message if there are no items wished
-  checkList();
+  // // Render
+  // for (let i = 0; i < items.length; i++) {
+  //   createItem(items[i][0], items[i][1], items[i][2], items[i][3], items[i][4]);
+  // }
+
+
 
   //Sending WishList Item to the server
   handleNewItem = (wishItem) => {
@@ -250,6 +326,7 @@ window.onload = () => {
       if(xhr.readyState==4 && xhr.status== 200){
         console.log("Item Added To The Server")
         console.log(xhr.responseText)
+        console.log(localStorage.getItem('access_token'))
       }else if (xhr.readyState== 4 && xhr.status!= 200){
         console.log("Unable to add item to wishlist")
       }
@@ -283,6 +360,7 @@ window.onload = () => {
         console.log("Logout Processed");
 
         window.location.href="./login.html"
+        localStorage.clear();
       }else if(xhr.readyState==4 && xhr.status == 401){
         console.log("Authorization Issue")
       }
