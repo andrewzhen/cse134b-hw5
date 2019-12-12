@@ -23,7 +23,7 @@ window.onload = () => {
             //allItemsToPop.push(currWish)
             //item, price, category, img, comment
             createItem(currWish.item, currWish.price, currWish.category, currWish.img, currWish.comment, currWish.id);
-  
+            console.log(currWish.img)
         }
         }
 
@@ -47,6 +47,7 @@ window.onload = () => {
   let inputComment = document.getElementById("comment");
   let toDelete;
   let toEdit;
+  let imgUrl;
   let imgToRender;
 
   // Cloundinary
@@ -54,6 +55,8 @@ window.onload = () => {
   var CLOUDINARY_UPLOAD_PRESET = 'cpxjan92';
 
   inputImage.addEventListener('change', (e) => {
+    imgToRender = this;
+    
     var file = e.target.files[0];
     var formData = new FormData();
     formData.append('file', file);
@@ -67,7 +70,8 @@ window.onload = () => {
       },
       data: formData
     }).then(function(res) { 
-      console.log(res);
+      imgUrl= "https://res.cloudinary.com/dhn2vey6h/image/fetch/"+res["data"]["url"];
+      console.log(imgUrl);
       // display.src = res.data.secure_url;
     }).catch(function(err) {
       console.error(err);
@@ -99,7 +103,7 @@ window.onload = () => {
   }
   
   checkWish =id=>{
-    console.log("checking wish");
+
     const xhr= new XMLHttpRequest()
     const url= `http://fa19server.appspot.com/api/wishlists/${id}?access_token=${localStorage.getItem('access_token')}`
 
@@ -245,67 +249,69 @@ window.onload = () => {
   }
 
   save = () => {
-    // Get values
-    let item = inputItem.value;
-    let price = inputPrice.value;
-    let category = inputCategory.value;
-    let image = inputImage.value;
-    let comment = inputComment.value;
-
-    if (toEdit == null) {
-      // Create item
-      let wishItem = [item, price, category, image, comment];
-      //items.push(wishItem);
-      createItem(wishItem[0], wishItem[1], wishItem[2], wishItem[3], wishItem[4]);
-      console.log(wishItem)
-
-      handleNewItem(wishItem);
+    if(!inputItem.value) {
+      alert("Please give this item a name");
+      console.log("User tried to save changes without providing item name");
     } else {
-      // Update item
-      let itemInfo = toEdit.childNodes[1];
-      itemInfo.childNodes[0].innerText = item;
-      itemInfo.childNodes[1].innerText = `$${price}`;
-      itemInfo.childNodes[2].innerText = `Category: ${category}`;
-      toEdit.childNodes[0] = getImg(image);
-      if (imgToRender) {
-        renderImg(imgToRender, toEdit.childNodes[0]);
-      }
-      itemInfo.childNodes[3].innerText = `Comment: ${comment}`;
+      // Get values
+      let item = inputItem.value;
+      let price = inputPrice.value;
+      let category = inputCategory.value;
+      let image = imgUrl;
+      let comment = inputComment.value;
+      console.log("THIS IS THE IMAGE URL GETTING SAVED"+imgUrl)
 
-      //when i click on the delete button
+      //Trying to save a new wish
+      if (toEdit == null) {
+        // Create item
+        let wishItem = [item, price, category, image, comment];
+        //items.push(wishItem);
+        createItem(wishItem[0], wishItem[1], wishItem[2], wishItem[3], wishItem[4]);
 
-      //send edited item to the server
-      const xhr= new XMLHttpRequest()
-      const url= `http://fa19server.appspot.com/api/wishlists/${toEdit.getAttribute(
-        'data-id')}/replace?access_token=${localStorage.getItem('access_token')}`
 
-      console.log(url);
-
-      xhr.open('POST', url, true);
-      xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
-      xhr.onreadystatechange=()=>{
-        if(xhr.readyState==4 && xhr.status==200){
-          console.log("Your item has been edited")
-        } else if(xhr.readyState==4 && xhr.status== 401){
-          alert("Must be logged in to authorize changes")
+        handleNewItem(wishItem);
+      } else {
+        // Update item
+        let itemInfo = toEdit.childNodes[1];
+        itemInfo.childNodes[0].innerText = item;
+        itemInfo.childNodes[1].innerText = `$${price}`;
+        itemInfo.childNodes[2].innerText = `Category: ${category}`;
+        toEdit.childNodes[0] = getImg(image);
+        if (imgToRender) {
+          renderImg(imgToRender, toEdit.childNodes[0]);
         }
+        itemInfo.childNodes[3].innerText = `Comment: ${comment}`;
+
+        //when i click on the delete button
+
+        //send edited item to the server
+        const xhr= new XMLHttpRequest()
+        const url= `http://fa19server.appspot.com/api/wishlists/${toEdit.getAttribute(
+          'data-id')}/replace?access_token=${localStorage.getItem('access_token')}`
+
+        xhr.open('POST', url, true);
+        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
+        xhr.onreadystatechange=()=>{
+          if(xhr.readyState==4 && xhr.status==200){
+            console.log("Your item has been edited")
+          } else if(xhr.readyState==4 && xhr.status== 401){
+            alert("Must be logged in to authorize changes")
+          } else if (xhr.readyState==4 && xhr.status ==422){
+            alert ("Unable to process request, check input.")
+          }
+        }
+
+        let payload= `item=${item}&price=${price}&category=${category}&image=${image}&comment=${comment}`;
+        console.log(payload)
+
+        xhr.send(payload)
       }
 
-      let payload= `item=${item}&price=${price}&category=${category}&image=${image}&comment=${comment}`;
-      console.log(payload)
-
-      xhr.send(payload)
+      // Clean up
+      cancel("itemDialog");
+      checkList();
     }
-
-    // Clean up
-    cancel("itemDialog");
-    checkList();
   }
-
-  // Event Listeners
-  inputImage.addEventListener("change", function() {
-    imgToRender = this;
-  });
 
   // // Render
   // for (let i = 0; i < items.length; i++) {
@@ -324,9 +330,6 @@ window.onload = () => {
 
     xhr.onreadystatechange= () => {
       if(xhr.readyState==4 && xhr.status== 200){
-        console.log("Item Added To The Server")
-        console.log(xhr.responseText)
-        console.log(localStorage.getItem('access_token'))
       }else if (xhr.readyState== 4 && xhr.status!= 200){
         console.log("Unable to add item to wishlist")
       }
@@ -346,11 +349,8 @@ window.onload = () => {
   //Logout
   document.getElementById('logout').addEventListener('click', ()=> {
 
-    console.log(localStorage.getItem("access_token"));
-
     const access_token= localStorage.getItem('access_token');
     const url= "http://fa19server.appspot.com/api/Users/logout?access_token="+access_token;
-    console.log(url)
 
     const xhr= new XMLHttpRequest()
     xhr.open('POST', url, true);
