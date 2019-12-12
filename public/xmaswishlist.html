@@ -7,6 +7,7 @@
     <meta name="author" content="Paridhi and Andrew">
     <meta name="description" content="This program uses HTTP to login, logout, and create a user base">
     <script src="wishlist.js"></script>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
   </head>
 
   <body>
@@ -17,6 +18,8 @@
     </div>
 
     <main>
+      <input id="file-upload" type="file">
+      <img id="img-preview" src="" alt="">
       <h1>Xmas Wishlist <span id="year">2019</span></h1>
 
       <button id="add" class="btn addBtn" onclick="addItem()">Add Item</button>

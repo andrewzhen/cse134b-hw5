@@ -1,7 +1,5 @@
 window.onload = () => {
 
-  let allItemsToPop=[];
-
   retrieveAllWishes=() => {
     const xhr= new XMLHttpRequest()
 
@@ -16,8 +14,6 @@ window.onload = () => {
 
         for(let i=0; i<allWishes.wishItems.length; i++){
           let currWish= allWishes.wishItems[i]
-          //allItemsToPop.push(currWish)
-          //item, price, category, img, comment
           createItem(currWish.item, currWish.price, currWish.category, currWish.img, currWish.comment);
         }
       } else if (xhr.readyState == 4 && xhr.status== 401){
@@ -29,7 +25,6 @@ window.onload = () => {
   }
 
   retrieveAllWishes()
-  
 
   // Variables
   let wishList = document.getElementById("wishList");
@@ -47,6 +42,31 @@ window.onload = () => {
   let toDelete;
   let toEdit;
   let imgToRender;
+
+  // Cloundinary
+  var CLOUDINARY_URL = 'https://api.cloudinary.com/v1_1/dhn2vey6h/upload';
+  var CLOUDINARY_UPLOAD_PRESET = 'cpxjan92';
+
+  inputImage.addEventListener('change', (e) => {
+    var file = e.target.files[0];
+    var formData = new FormData();
+    formData.append('file', file);
+    formData.append('upload_preset', CLOUDINARY_UPLOAD_PRESET);
+
+    axios({
+      url: CLOUDINARY_URL,
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      },
+      data: formData
+    }).then(function(res) { 
+      console.log(res);
+      // display.src = res.data.secure_url;
+    }).catch(function(err) {
+      console.error(err);
+    });
+  });
   
   // Functions
   checkList = () => noItems.style.display = (wishList.childElementCount == 0) ? "inline-block" : "none";
@@ -88,12 +108,17 @@ window.onload = () => {
 
   getImg = src => {
     let img = document.createElement("IMG");
-    img.src = src;
+    if (!src) {
+      img.src = "https://res.cloudinary.com/dhn2vey6h/image/upload/v1576109558/xvgtgtfuqrysqjkxmqgo.png";
+    } else { 
+      img.src = src;
+    }
     img.width = "250";
     img.style.boxShadow = "0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)";
     img.style.padding = "100px";
     return img;
   }
+
   function renderImg(input, display) {
     var reader;
   
@@ -210,11 +235,7 @@ window.onload = () => {
     imgToRender = this;
   });
 
-  // // Render
-  // for (let i = 0; i < items.length; i++) {
-  //   createItem(items[i][0], items[i][1], items[i][2], items[i][3], items[i][4]);
-  // }
-
+  // Displays message if there are no items wished
   checkList();
 
   //Sending WishList Item to the server
