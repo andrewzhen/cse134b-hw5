@@ -52,6 +52,7 @@
             let parsedJson= JSON.parse(xhr.responseText)
             console.log(parsedJson.id)
             localStorage.setItem('access_token', parsedJson.id);
+            localStorage.setItem('username', name);
             console.log("From local storage" + localStorage.getItem('access_token'))
             window.location.href="./xmaswishlist.html"
           }
