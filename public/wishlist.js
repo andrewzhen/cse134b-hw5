@@ -1,5 +1,6 @@
 window.onload = () => {
 
+  document.getElementById('username').innerHTML= localStorage.getItem('username');
   retrieveAllWishes=() => {
     const xhr= new XMLHttpRequest()
 
@@ -22,8 +23,7 @@ window.onload = () => {
             let currWish= allWishes.wishItems[i]
             //allItemsToPop.push(currWish)
             //item, price, category, img, comment
-            createItem(currWish.item, currWish.price, currWish.category, currWish.img, currWish.comment, currWish.id);
-            console.log(currWish.img)
+            createItem(currWish.item, currWish.price, currWish.category, currWish.image, currWish.comment, currWish.id);
         }
         }
 
@@ -101,37 +101,22 @@ window.onload = () => {
     checkList();
     deleteDialog.close();
   }
-  
-  checkWish =id=>{
-
-    const xhr= new XMLHttpRequest()
-    const url= `http://fa19server.appspot.com/api/wishlists/${id}?access_token=${localStorage.getItem('access_token')}`
-
-    xhr.open('GET', url, true);
-    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-
-    xhr.onreadystatechange=()=>{
-      if(xhr.readyState==4){
-        console.log(xhr.status)
-      }
-    }
-
-    xhr.send()
-  }
 
   handleDelete= deleteId => {
 
     
     const xhr= new XMLHttpRequest();
-    console.log("delete"+ localStorage.getItem('access_token'))
     const url= `http://fa19server.appspot.com/api/wishlists/${deleteId}?access_token=${localStorage.getItem('access_token')}`
-    console.log(url);
 
     xhr.open('DELETE',url,true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded')
     xhr.onreadystatechange=()=>{
-      if(xhr.readyState==4){
-        console.log(xhr.status)
+      if(xhr.readyState==4 && xhr.status == 200){
+        console.log("Deletion Processed")
+      } else if (xhr.readyState == 4 && xhr.status== 401){
+        alert("You must be logged in to delete items")
+      } else if(xhr.readyState == 4 && xhr.status == 422){
+        alert("Bad Input. Please Retry")
       }
     }
 
@@ -259,7 +244,6 @@ window.onload = () => {
       let category = inputCategory.value;
       let image = imgUrl;
       let comment = inputComment.value;
-      console.log("THIS IS THE IMAGE URL GETTING SAVED"+imgUrl)
 
       //Trying to save a new wish
       if (toEdit == null) {
@@ -268,7 +252,7 @@ window.onload = () => {
         //items.push(wishItem);
         createItem(wishItem[0], wishItem[1], wishItem[2], wishItem[3], wishItem[4]);
 
-
+        console.log(wishItem)
         handleNewItem(wishItem);
       } else {
         // Update item
@@ -301,8 +285,7 @@ window.onload = () => {
           }
         }
 
-        let payload= `item=${item}&price=${price}&category=${category}&image=${image}&comment=${comment}`;
-        console.log(payload)
+        let payload= `item=${item}&price=${price}&category=${category}&image=${imgUrl}&comment=${comment}`;
 
         xhr.send(payload)
       }
@@ -330,8 +313,11 @@ window.onload = () => {
 
     xhr.onreadystatechange= () => {
       if(xhr.readyState==4 && xhr.status== 200){
-      }else if (xhr.readyState== 4 && xhr.status!= 200){
-        console.log("Unable to add item to wishlist")
+        window.location.reload(true)
+      }else if (xhr.readyState== 4 && xhr.status== 401){
+        alert("You need to be logged in to add items to the wishlist")
+      }else if (xhr.readyState== 4 && xhr.status==422){
+        alert("Bad input. Please improvise")
       }
     }
 
@@ -341,8 +327,9 @@ window.onload = () => {
     let image= wishItem[3]
     let comment= wishItem[4]
 
-    let payload= `item=${item}&price=${price}&category=${category}&image=${image}&comment=${comment}`
+    console.log(image);
 
+    let payload= `item=${item}&price=${price}&category=${category}&image=${image}&comment=${comment}`
     xhr.send(payload)
   }
 
