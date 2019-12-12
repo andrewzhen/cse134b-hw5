@@ -28,10 +28,11 @@
       <span id="noItems"></span>
 
       <dialog id="itemDialog">
+          <p>Image: <input id="image" type="file" name="image" accept="image/png, image/jpeg"></p>
         <p>Item: <input id="item" type="text" placeHolder="Item" required></p>
         <p>Price: <input id="price" type="number" name="price" min="1" max="999999"></p>
         <p>Category: <input id="category" type="text" placeHolder="Category"></p>
-        <p>Image: <input id="image" type="file" name="image" accept="image/png, image/jpeg"></p>
+        
         <p>Comment: <input id="comment" type="text" placeholder="Comment"></p>
         <button onclick="cancel('itemDialog')">Cancel</button>
         <button onclick="save()">Save</button>
